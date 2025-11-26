@@ -27,6 +27,15 @@ const getApiBaseUrl = (): string => {
 export const isDevelopment = import.meta.env.DEV
 export const isProduction = import.meta.env.PROD
 
+// baseURL 저장 (한 번만 계산)
+const apiBaseUrl = getApiBaseUrl()
+
+// API 경로가 /api로 시작하는지 확인 (개발 환경 또는 baseURL이 /api인 경우)
+export const shouldUseApiPrefix = (): boolean => {
+  // baseURL이 정확히 /api이면 프리픽스 없이 사용 (개발 환경)
+  return apiBaseUrl === '/api'
+}
+
 // API 호출용 axios 인스턴스
 export const apiClient = axios.create({
   baseURL: getApiBaseUrl(),

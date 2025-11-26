@@ -282,7 +282,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { kmaApiClient, isDevelopment } from '../utils/api'
+import { kmaApiClient, shouldUseApiPrefix } from '../utils/api'
 import { getKmaApiKey } from '../utils/env'
 
 interface SeaObservationData {
@@ -339,9 +339,9 @@ const fetchSeaData = async () => {
       throw new Error('기상청 API 키가 설정되지 않았습니다. VITE_KMA_API_KEY 환경변수를 확인해주세요.')
     }
 
-    // 개발 환경: baseURL이 /api이므로 /kma/sea_obs.php 사용
-    // 프로덕션: baseURL이 백엔드 URL이므로 /api/kma/sea_obs.php 사용
-    const apiPath = isDevelopment ? '/kma/sea_obs.php' : '/api/kma/sea_obs.php'
+    // baseURL이 /api이면 /kma/sea_obs.php 사용 (개발 환경)
+    // baseURL이 백엔드 URL이면 /api/kma/sea_obs.php 사용 (프로덕션)
+    const apiPath = shouldUseApiPrefix() ? '/kma/sea_obs.php' : '/api/kma/sea_obs.php'
     
     const response = await kmaApiClient.get<ArrayBuffer>(apiPath, {
       params: {
