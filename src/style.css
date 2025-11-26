@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Spoqa Han Sans Neo', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-slate-900/90 hover:bg-slate-900 text-white font-medium py-2 px-5 rounded-full shadow-[0_12px_30px_-20px_rgba(15,23,42,0.6)] transition-all duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-white/70 hover:bg-white text-slate-800 font-medium py-2 px-5 rounded-full border border-slate-200/70 shadow-[0_10px_25px_-22px_rgba(15,23,42,0.55)] transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-white/85 rounded-2xl border border-slate-200/60 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)] p-6 backdrop-blur;
+  }
+  
+  .ocean-gradient {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 45%, rgba(15, 23, 42, 0.88) 100%);
+  }
+  
+  .wave-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f8fafc' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+}
