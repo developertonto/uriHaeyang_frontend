@@ -167,7 +167,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick, onMounted } from 'vue'
-import axios from 'axios'
+import { apiClient } from '../utils/api'
 
 interface ChatMessage {
   role: 'user' | 'assistant'
@@ -180,9 +180,6 @@ const inputMessage = ref('')
 const isLoading = ref(false)
 const error = ref('')
 const chatContainer = ref<HTMLElement>()
-
-// 백엔드 API URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
 
 // 빠른 질문 목록
 const quickQuestions = ref([
@@ -262,16 +259,10 @@ const callChatGPT = async (message: string): Promise<string> => {
       content: message
     })
 
-    const response = await axios.post(
-      `${API_BASE_URL}/chat`,
+    const response = await apiClient.post(
+      '/chat',
       {
         messages: chatMessages
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        timeout: 30000 // 30초 타임아웃
       }
     )
 

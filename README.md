@@ -40,8 +40,15 @@ npm install
 ```env
 VITE_OPENAI_API_KEY=your_openai_api_key_here
 VITE_WEATHER_API_KEY=your_weather_api_key_here
+VITE_KMA_API_KEY=your_kma_api_key_here
 VITE_API_BASE_URL=http://localhost:3001
 ```
+
+**환경변수 설명:**
+- `VITE_OPENAI_API_KEY`: OpenAI API 키 (AI 챗봇 기능용)
+- `VITE_WEATHER_API_KEY`: OpenWeatherMap API 키 (날씨 기능용)
+- `VITE_KMA_API_KEY`: 기상청 API 키 (해상 자료 기능용)
+- `VITE_API_BASE_URL`: 백엔드 서버 URL (프로덕션에서는 필수)
 
 #### 백엔드 환경변수 (필수)
 `uriHaeyang_backend/` 디렉토리에 `.env` 파일을 생성하세요:

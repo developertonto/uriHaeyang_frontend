@@ -14,3 +14,11 @@ export const getWeatherApiKey = (): string => {
   return key ?? ''
 }
 
+export const getKmaApiKey = (): string => {
+  const key = import.meta.env.VITE_KMA_API_KEY
+  if (!key) {
+    console.warn('VITE_KMA_API_KEY is not defined. 기상청 해상 자료 기능이 제한될 수 있습니다.')
+  }
+  return key ?? ''
+}
+

@@ -282,7 +282,8 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import axios from 'axios'
+import { kmaApiClient } from '../utils/api'
+import { getKmaApiKey } from '../utils/env'
 
 interface SeaObservationData {
   observationType: string
@@ -333,14 +334,18 @@ const fetchSeaData = async () => {
   error.value = ''
 
   try {
-    const response = await axios.get<ArrayBuffer>('/api/kma/sea_obs.php', {
+    const authKey = getKmaApiKey()
+    if (!authKey) {
+      throw new Error('기상청 API 키가 설정되지 않았습니다. VITE_KMA_API_KEY 환경변수를 확인해주세요.')
+    }
+
+    const response = await kmaApiClient.get<ArrayBuffer>('/kma/sea_obs.php', {
       params: {
         stn: 0,
         help: 1,
-        authKey: 'NRYkCk8ERg-WJApPBJYPxA',
+        authKey: authKey,
       },
       responseType: 'arraybuffer',
-      timeout: 35000,
     })
 
     const decoded = decodeSeaData(response.data)
