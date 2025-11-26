@@ -23,6 +23,10 @@ const getApiBaseUrl = (): string => {
   return '/api' // fallback
 }
 
+// 개발/프로덕션 환경 확인
+export const isDevelopment = import.meta.env.DEV
+export const isProduction = import.meta.env.PROD
+
 // API 호출용 axios 인스턴스
 export const apiClient = axios.create({
   baseURL: getApiBaseUrl(),

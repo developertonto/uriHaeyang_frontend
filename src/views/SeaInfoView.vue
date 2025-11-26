@@ -175,17 +175,17 @@
             >
               이전
             </button>
-            <template v-for="page in totalPages" :key="page">
-              <button
-                class="w-9 h-9 rounded-full border transition-colors duration-150"
-                :class="page === currentPage
-                  ? 'border-slate-900 bg-slate-900 text-white'
-                  : 'border-slate-200 text-slate-600 hover:bg-slate-100'"
-                @click="goToPage(page)"
-              >
-                {{ page }}
-              </button>
-            </template>
+            <button
+              v-for="page in totalPages"
+              :key="page"
+              class="w-9 h-9 rounded-full border transition-colors duration-150"
+              :class="page === currentPage
+                ? 'border-slate-900 bg-slate-900 text-white'
+                : 'border-slate-200 text-slate-600 hover:bg-slate-100'"
+              @click="goToPage(page)"
+            >
+              {{ page }}
+            </button>
             <button
               class="px-3 py-2 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed"
               @click="goToNextPage"
@@ -282,7 +282,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { kmaApiClient } from '../utils/api'
+import { kmaApiClient, isDevelopment } from '../utils/api'
 import { getKmaApiKey } from '../utils/env'
 
 interface SeaObservationData {
@@ -339,7 +339,11 @@ const fetchSeaData = async () => {
       throw new Error('기상청 API 키가 설정되지 않았습니다. VITE_KMA_API_KEY 환경변수를 확인해주세요.')
     }
 
-    const response = await kmaApiClient.get<ArrayBuffer>('/kma/sea_obs.php', {
+    // 개발 환경: baseURL이 /api이므로 /kma/sea_obs.php 사용
+    // 프로덕션: baseURL이 백엔드 URL이므로 /api/kma/sea_obs.php 사용
+    const apiPath = isDevelopment ? '/kma/sea_obs.php' : '/api/kma/sea_obs.php'
+    
+    const response = await kmaApiClient.get<ArrayBuffer>(apiPath, {
       params: {
         stn: 0,
         help: 1,

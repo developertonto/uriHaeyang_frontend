@@ -167,7 +167,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick, onMounted } from 'vue'
-import { apiClient } from '../utils/api'
+import { apiClient, isDevelopment } from '../utils/api'
 
 interface ChatMessage {
   role: 'user' | 'assistant'
@@ -259,8 +259,12 @@ const callChatGPT = async (message: string): Promise<string> => {
       content: message
     })
 
+    // 개발 환경: baseURL이 /api이므로 /chat 사용
+    // 프로덕션: baseURL이 백엔드 URL이므로 /api/chat 사용
+    const apiPath = isDevelopment ? '/chat' : '/api/chat'
+    
     const response = await apiClient.post(
-      '/chat',
+      apiPath,
       {
         messages: chatMessages
       }
